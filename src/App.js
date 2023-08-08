@@ -1,7 +1,8 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from './Modal.js';
-import jsonData from './data.json';
+import axios from 'axios';
+// import jsonData from './data.json';
 import health from './img/icon _health.png';
 import casco from './img/casco.png';
 import chaleco from './img/chaleco.png';
@@ -20,12 +21,15 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null); 
 
-  useEffect(() => {
-    setModalData(jsonData);
-  }, []);
 
   const openModal = () => {
-    setIsModalOpen(true);
+    axios.get('http://localhost:3001/api/player/1880')
+    // fetch(`http://localhost:3001/api/player/${playerId}`)//reemeplazar por la variable que me pasara Aiden
+      .then(response => {
+        setModalData(response.data);
+        setIsModalOpen(true);
+      })
+
   };
 
   const closeModal = () => {
@@ -182,3 +186,4 @@ const App = () => {
 }
 
 export default App;
+
